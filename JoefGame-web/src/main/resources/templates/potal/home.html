@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>HOME | JOEF · GAME</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+
+<div id="home">
+    <!--导航栏-->
+    <div th:replace="navigation :: nav"></div>
+
+    <div class="container-fluid home">
+        <div class="row" v-if="loadedUser" v-cloak>
+            <div class="col-lg-3 .col-md-12 .col-sm-12 .col-xs-12">
+                <div class="left">
+                    <div class="user-info">
+                        <img :src="user.avatarUrl" :alt="user.name"><br>
+                        <br>
+                        <span v-text="user.name"></span>
+                        <br>
+                        <span v-text="user.bio" class="user-bio"></span>
+                    </div>
+                    <hr>
+                    <span><h4>关注的</h4></span>
+                    <table class="home-left-subscribe-table">
+                        <tr>
+                            <td :class="leftUserClass" @click="listUser()"><h5>用户</h5></td>
+                            <td :class="leftSteamClass" @click="listSteam()"><h5>Steam 应用</h5></td>
+                        </tr>
+                    </table>
+
+                    <!--            关注的用户/steam应用-->
+                    <div v-if="loadedSubscribe" v-cloak>
+                        <div v-if="subscribeType=='user'">
+                            <span v-if="subsribeNum==0" class="common-span">您还未关注用户...</span>
+                            <table class="user-steam-common-table">
+                                <tr v-for="user in pagination.datas" class="user-tr user-steam-common-tr">
+                                    <td><img :src="user.avatarUrl" class="followed-uesr-avatar"></td>
+                                    <td><a :href="'/user/' + user.id" v-text="user.name"></a></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div v-if="subscribeType=='steam'">
+                            <span v-if="subsribeNum==0" class="common-span">您还未收藏Steam应用...</span>
+                            <table class="user-steam-common-table">
+                                <tr v-for="app in pagination.datas" class="steam-tr user-steam-common-tr">
+                                    <td><a :href="'/steam/app/' + app.appid" v-text="app.name"></a></td>
+                                    <td>
+                                        <span v-if="app.originalPrice==0">免费</span>
+                                        <span v-else-if="app.finalPrice==app.originalPrice">原价</span>
+                                        <span v-else>特惠</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--            分页条开始-->
+                        <nav aria-label="Page navigation" class="page-pos">
+                            <ul class="pagination">
+                                <!--                                <li v-if="pagination.hasFirst">-->
+                                <!--                                    <a @click="listSubscribe(1,subscribeType)" aria-label="First">-->
+                                <!--                                        <span aria-hidden="true">&lt;&lt;</span>-->
+                                <!--                                    </a>-->
+                                <!--                                </li>-->
+                                <li v-if="pagination.hasPrevious">
+                                    <a @click="listSubscribe(pagination.page-1,subscribeType)"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&lt;</span>
+                                    </a>
+                                </li>
+
+                                <!--                                <li v-for="page in pagination.pages" :class="[page==pagination.page?'active':'']"><a-->
+                                <!--                                        @click="listSubscribe(page,subscribeType)" v-text="page"></a></li>-->
+
+                                <li v-if="pagination.hasNext">
+                                    <a @click="listSubscribe(pagination.page+1,subscribeType)" aria-label="Next">
+                                        <span aria-hidden="true">&gt;</span>
+                                    </a>
+                                </li>
+                                <!--                                <li v-if="pagination.hasLast">-->
+                                <!--                                    <a @click="listSubscribe(pagination.totalPage,subscribeType)" aria-label="Last">-->
+                                <!--                                        <span aria-hidden="true">&gt;&gt;</span>-->
+                                <!--                                    </a>-->
+                                <!--                                </li>-->
+                            </ul>
+                        </nav>
+                        <!--            分页条结束-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 .col-md-12 .col-sm-12 .col-xs-12">
+                <table class="home-middle-select-table">
+                    <tr>
+                        <td :class="middleUserClass" @click="listUserPosts()"><h4>关注动态</h4></td>
+                        <td :class="middleSteamClass" @click="listSteamAppNews()"><h4>STEAM新闻速递</h4></td>
+                    </tr>
+                </table>
+                <div class="middle">
+                    <div v-if="middleUserClass=='my-active'" v-cloak>
+                        <!--当前为'关注动态'-->
+                        <template v-if="userPosts.length!=0">
+                            <div class="media" v-for="post in userPosts">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" :src="post.avatarUrl">
+                                    </a>
+                                </div>
+                                <!--发表帖子-->
+                                <div class="media-body" v-if="post.type == 1">
+                                    <h4 class="media-heading" v-text="post.posterName + ' 发表了帖子'"></h4>
+                                    <h5 v-text="post.postTitle"></h5>
+                                    <span v-text="timestampToTime(post.postTime)"></span>
+                                </div>
+                                <!--发表动态-->
+                                <div class="media-body" v-if="post.type == 2">
+                                    <h4 class="media-heading" v-text="post.posterName + ' 发布了动态'"></h4>
+                                    <h5 v-text="post.postContent"></h5>
+                                    <span v-text="timestampToTime(post.postTime)"></span>
+                                </div>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <div class="non-span">
+                                <span >暂无更多动态...</span>
+                            </div>
+                        </template>
+                    </div>
+                    <div v-if="middleSteamClass=='my-active'" v-cloak>
+                        <!--当前为'Steam新闻速递'-->
+                        <template v-if="appNews.length!=0">
+                            <div v-for="snew in appNews" class="app-new">
+                                <h4 v-text="snew.title"></h4>
+                                <span v-if="snew.author" v-text="snew.author"></span><br>
+                                <span v-html="snew.contents"></span><br>
+                                <span v-text="timestampToTime(snew.date)"></span><br>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <div class="non-span">
+                                <span>暂无更多新闻...</span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <!--        右侧信息条-->
+            <div class="col-lg-3 .col-md-12 .col-sm-12 .col-xs-12">
+                <div class="right-up">
+
+                </div>
+                <div class="right-down">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="footer :: foot"></div>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="/jquery/jquery-3.4.1.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/potal/commonSearch.js"></script>
+<script src="/js/potal/home.js"></script>
+<script src="/js/potal/logout.js"></script>
+<script src="/layer/layer.js"></script>
+<script src="/js/potal/message.js"></script>
+</body>
+</html>

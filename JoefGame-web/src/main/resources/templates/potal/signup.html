@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册 | JOEF · GAME</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+<div id="signup">
+
+    <!--导航栏-->
+    <div th:replace="navigation :: nav"></div>
+
+    <div class="ticks" v-cloak v-if="tmpGithubUser || tmpSteamUser">
+        <div class="panel panel-default ticks" >
+            <div class="panel-body">
+                <div v-if="tmpGithubUser"><h4>您在通过Github进行登录，该账户尚未绑定注册，完成以下步骤即可完成注册</h4></div>
+                <div v-if="tmpSteamUser"><h4>您在通过Steam进行登录，该账户尚未绑定注册，完成以下步骤即可完成注册</h4></div>
+                <div v-if="tmpGithubUser"><h5>如果您已经有JoefGame账号，请通过个人中心绑定Github账号</h5></div>
+                <div v-if="tmpSteamUser"><h5>如果您已经有JoefGame账号，请通过个人中心绑定Steam账号</h5></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid signup-main signup" style="margin-bottom: 30px;">
+        <div class="row">
+            <div class="up-div">
+                <div class="login-div">
+                    <img src="/imgs/signup.png" alt="" class="login-ico" style="margin-left:70px; ">
+                    <div class="panel" style="text-align: left;">
+                        <br>
+                        <div class="form-group">
+                            <label for="username">请输入用户名</label>
+                            <input v-model="name" type="text" class="form-control" id="username" placeholder="请输入用户名">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">请输入邮箱</label>
+                            <input v-model="email" type="email" class="form-control" id="email" placeholder="请输入邮箱">
+                        </div>
+                        <div class="input-group">
+                            <label for="authcode">请输入验证码</label>
+                            <input v-model="authCode" type="text" class="form-control" id="authcode"
+                                   placeholder="点击 Go!,获取确认邮件">
+                            <span class="input-group-btn">
+                        <button @click="getAuthcode(email)" class="btn btn-default getMail-btn"
+                                type="button">Go!</button></span>
+                        </div><!-- /input-group -->
+                        <br>
+                        <div class="form-group">
+                            <label for="password">请输入密码</label>
+                            <input v-model="password" type="password" class="form-control" id="password"
+                                   placeholder="请输入密码">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">请确认密码</label>
+                            <input type="password" class="form-control" id="confirm-password" placeholder="请确认密码">
+                        </div>
+
+                        <br>
+                        <button @click="signup(name,email,password,authCode,tmpGithubUser,tmpSteamUser)" type="button" class="btn pixel-btn">注册
+                        </button>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="signup-bottom-btn">
+        已经有账号了？<a href="/login">登录</a>
+    </div>
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="/jquery/jquery-3.4.1.js"></script>
+<script src="/jquery/jquery-form.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/potal/commonSearch.js"></script>
+<script src="/js/potal/signup.js"></script>
+<script src="/layer/layer.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+.login-main{
+    border: 1px solid #222034;
+    border-radius: 20px;
+    margin-left: 32% !important;
+    margin-right: 32% !important;
+    margin-top: 10px;
+}
+.signup-main{
+    border: 1px solid #222034;
+    border-radius: 20px;
+    margin-left: 32% !important;
+    margin-right: 32% !important;
+    margin-top: 10px;
+    height: 700px;
+}
+.back-index{
+    position: fixed;
+    top: 30px;
+    left: 20px;
+    font-size: 20px;
+}
+.back-index a{
+    text-decoration: none;
+}
+
+.up-div{
+    margin-top: -10px;
+}
+
+.login-ico{
+    margin-left: 85px;
+}
+
+.login-div{
+    margin: 3% 15%;
+}
+.panel{
+    /*border: 1px #999999 solid;*/
+    border-radius: 20px;
+    padding: 10px;
+    height: 300px;
+    text-align: center;
+}
+.panel a{
+    padding-left: 55px;
+    padding-right: 55px;
+    color: #e7513b;
+    font-weight: lighter;
+    font-family: "幼圆",sans-serif;
+}
+
+label{
+    font-family: "幼圆",sans-serif;
+    font-size: 17px;
+}
+
+.down-div{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+.pixel-btn{
+    background: #e7513b !important;
+    color: white !important;
+    width: 365px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+.pixel-btn:hover{
+    background: #d13d2a !important;
+}
+.third-part-login{
+    border: 1px solid #999999;
+    border-radius: 15px;
+    height: 45px;
+    width: 500px;
+    margin-left: 41px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.third-part-login a {
+    text-decoration: none;
+}
+.third-part-login a :hover{
+    color: #d13d2a !important;
+}
+.github-login-sub{
+    margin-top: 4px;
+}
+.steam-login-sub{
+    margin-top: 4px;
+}
+.steam-login-sub a img{
+    margin-top: -3px !important;
+    border-radius: 10px !important;
+}
+
+/*注册*/
+.form-control{
+    border-radius: 5px !important;
+}
+.getMail-btn{
+    background: #e7513b !important;
+    color: white;
+    margin-top:29px;
+    border-radius: 5px;
+}
+.getMail-btn:hover{
+    background: #d13d2a !important;
+    color: white !important;
+}
+.signup-bottom-btn{
+    margin-left: 690px;
+    margin-bottom: 10px;
+}
+.signup-bottom-btn a{
+    color: #e7513b;
+}
+.ticks{
+    width: 70% !important;
+    height: 105px !important;
+    margin-left: 15%;
+}

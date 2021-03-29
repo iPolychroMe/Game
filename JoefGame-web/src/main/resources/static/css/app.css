@@ -1,0 +1,45 @@
+body {
+    font-family: "幼圆", sans-serif;
+}
+
+h3 {
+
+}
+
+.left-zone {
+    margin-top: 23px;
+}
+
+.left-zone .app-table tr {
+    height: 53px;
+    border-top: 1px solid rgba(240, 240, 240, .9);
+}
+
+.left-zone .table-zone {
+    /*background-color: rgba(227,227,227,.6);*/
+    font-size: 17px;
+}
+
+.right-zone {
+    margin-top: 23px;
+}
+
+.right-zone img {
+    width: 99%;
+    border-radius: 7px;
+    margin-bottom: 10px;
+}
+
+.bottom-zone .left-nav {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 160px;
+    padding-top: 60px;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+.player-count {
+    color: #e7513b;
+}
